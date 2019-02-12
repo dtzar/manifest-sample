@@ -1,0 +1,43 @@
+---
+# Source: service-chart/templates/configMap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: simple-service-configmap
+  namespace: "services"
+data:
+  STORAGE_ACCOUNT: west-storage
+---
+# Source: service-chart/templates/destinationRule.yaml
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: simple-service
+spec:
+  host: simple-service
+  subsets:
+  - name: stable
+    labels:
+      version: stable
+  - name: canary
+    labels:
+      version: canary
+---
+# Source: service-chart/templates/virtualService.yaml
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: simple-service
+spec:
+  hosts:
+    - simple-service
+  http:
+  - route:
+    - destination:
+        host: simple-service
+        subset: stable
+      weight: 90
+    - destination:
+        host: simple-service
+        subset: canary
+      weight: 10
