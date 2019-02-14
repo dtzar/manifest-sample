@@ -16,11 +16,11 @@ spec:
         name: simple-service
         version: canary
     spec:
-      imagePullSecrets:
-        - name: acr-tpark
+      # imagePullSecrets:
+      #   - name: acr-tpark
       containers:
       - name: simple-service
-        image: tpark.azurecr.io/tpark/simple-service:20181118T195312Z
+        image: andrebriggs/goserver:v1.2
         imagePullPolicy: Always
         resources:
           requests:
