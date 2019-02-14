@@ -21,7 +21,7 @@ spec:
       #   - name: acr-tpark
       containers:
       - name: simple-service
-        image: andrebriggs/goserver:v1.1
+        image: andrebriggs/simple-service:latest
         imagePullPolicy: Always
         resources:
           requests:
