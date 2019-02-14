@@ -3,7 +3,7 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: simple-service
+  name: simple-service-canary
   labels:
     name: simple-service
 spec:
