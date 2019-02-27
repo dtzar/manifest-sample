@@ -53,6 +53,8 @@ spec:
         - destination:
             port:
               number: 8080
+            # Services in Kubernetes expose their endpoint using a common DNS pattern.
+            # It looks like: <Service Name>.<Namespace Name>.svc.cluster.local
             host: jackson-api.default.svc.cluster.local
     - route: # This rule will pickup all other requests because it doesn't have a `match`
         - destination:
