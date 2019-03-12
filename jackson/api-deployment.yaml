@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1 # for versions before 1.8.0 use apps/v1beta1
 kind: Deployment
 metadata:
@@ -17,51 +18,51 @@ spec:
         prometheus.io/scrape: "true"
     spec:
       containers:
-        - name: jackson-api
-          image: mtarng/jackson-api:v1.0
-          resources:
-            requests:
-              memory: "64Mi"
-              cpu: "250m"
-            limits:
-              memory: "1024Mi"
-              cpu: "500m"
-          ports:
-            - containerPort: 8080
-              name: api
-            - containerPort: 5005 # Optional port for remote debugging.
-              name: jvm-debug
-          env:
-            - name: SERVER_SERVLET_CONTEXT_PATH
-              value: "/api"
-            - name: spring.profiles.active
-              value: "development"
+      - name: jackson-api
+        image: mtarng/jackson-api:v1.1-peoplehobby
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "1024Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8080
+          name: api
+        - containerPort: 5005     # Optional port for remote debugging.
+          name: jvm-debug
+        env:
+        - name: SERVER_SERVLET_CONTEXT_PATH
+          value: "/api"
+        - name: spring.profiles.active
+          value: "development"
               # https://github.com/Microsoft/containers-rest-cosmos-appservice-java/tree/master/api#database
-            - name: DB_CONNSTR # a mongo database connection string (ex: mongodb://db.com/myDb)
-              valueFrom:
-                secretKeyRef:
-                  name: jackson-secrets
-                  key: DB_CONNSTR
-            - name: DB_NAME # a mongo database name (ex: myDb)
-              valueFrom:
-                secretKeyRef:
-                  name: jackson-secrets
-                  key: DB_NAME
-            - name: EXCLUDE_FILTER # [optional] a (regex capable) list of classes to exclude from loading (ex: TitleRepository,PersonRepository)
-              value: ""
-            - name: ALLOWED_ORIGIN # For CORS stuff
-              value: "*"
-            - name: OAUTH_KEYSET_URI
-              valueFrom:
-                secretKeyRef:
-                  name: jackson-secrets
-                  key: OAUTH_KEYSET_URI
-            - name: OAUTH_RES_ID
-              valueFrom:
-                secretKeyRef:
-                  name: jackson-secrets
-                  key: OAUTH_RES_ID
-            - name: JAEGER_AGENT_HOST
-              value: "jaeger-agent.jaeger.svc.cluster.local"
-            - name: JAEGER_AGENT_PORT
-              value: "6831"
+        - name: DB_CONNSTR     # a mongo database connection string (ex: mongodb://db.com/myDb)
+          valueFrom:
+            secretKeyRef:
+              name: jackson-secrets
+              key: DB_CONNSTR
+        - name: DB_NAME     # a mongo database name (ex: myDb)
+          valueFrom:
+            secretKeyRef:
+              name: jackson-secrets
+              key: DB_NAME
+        - name: EXCLUDE_FILTER     # [optional] a (regex capable) list of classes to exclude from loading (ex: TitleRepository,PersonRepository)
+          value: ""
+        - name: ALLOWED_ORIGIN     # For CORS stuff
+          value: "*"
+        - name: OAUTH_KEYSET_URI
+          valueFrom:
+            secretKeyRef:
+              name: jackson-secrets
+              key: OAUTH_KEYSET_URI
+        - name: OAUTH_RES_ID
+          valueFrom:
+            secretKeyRef:
+              name: jackson-secrets
+              key: OAUTH_RES_ID
+        - name: JAEGER_AGENT_HOST
+          value: "jaeger-agent.jaeger.svc.cluster.local"
+        - name: JAEGER_AGENT_PORT
+          value: "6831"
