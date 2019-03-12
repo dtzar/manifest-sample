@@ -1,0 +1,1 @@
+{"jobID":"ee61042d-18f2-f66d-f31a-055dd74d618b","spec":{"type":"policy","cause":{"Message":"","User":"GitTask \u003cgittask@notused.com\u003e"},"spec":{"default:deployment/spring-boot-api-deployment":{"add":{"automated":"true"},"remove":{}}}},"result":null}
